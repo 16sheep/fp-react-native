@@ -1,11 +1,23 @@
 import React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import { ButtonGroup } from 'react-native-elements'
+import FestivalInfo from './FestivalInfo'
+import FestivalEvents from './FestivalEvents'
+import FestivalAreas from './FestivalAreas'
+
 
 export default class FestivalDetailsScreen extends React.Component {
     state= {
         events: [],
-        areas: []
+        areas: [],
+        selectedIndex: 0
     }
+
+    updateIndex = (selectedIndex) => {
+        this.setState({selectedIndex})
+    }
+
+      
     
     componentDidMount(){
         const festival = this.props.navigation.getParam('festival', 'NO-ID');
@@ -24,19 +36,21 @@ export default class FestivalDetailsScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const {areas, events} = this.state
+    const {areas, events, selectedIndex} = this.state
     const festival = navigation.getParam('festival', 'NO-ID');
+    const buttons = ["INFO", "EVENTS", "MAP"]
 
-    
     return (
       <View>
         <Text>{festival.name}</Text>
-        <Text>Events</Text>
-        {events.map(e => <Text>{e.name}</Text>)}
-        <Text>Areas</Text>
-        {areas.map(a => <Text>{a.name}</Text>)}
-        
-      </View>
+        <ButtonGroup
+            onPress={this.updateIndex}
+            selectedIndex={selectedIndex}
+            buttons={buttons}
+            containerStyle={{height: 100}} />
+        {selectedIndex === 0 ? <FestivalInfo festival={festival}/>: 
+        selectedIndex === 1 ? <FestivalEvents events={events.map(e =>{ return {event: e, area: areas.find(a => a.id == e.area_id)}})} /> : null}
+      </View> 
     );
   }
 }
