@@ -4,16 +4,23 @@ import { ScrollView, StyleSheet, TouchableOpacity, Text, View, Image } from 'rea
 export default class FestivalAreas extends React.Component {
  
   render() {
-    const { navigation, areas, events, festival } = this.props;    
+    const { areas, map  } = this.props;  
+    console.log(areas)  
     return (
       <View>
-        <Text>{festival.name}</Text>
-        <Text>Festival Areas</Text>
         <Image
-            source={{ uri: festival.image }}
-            style={{ width: 200, height: 200 }}
+            source={{ uri: map }}
+            style={{ width: 350, height: 500 }}
             PlaceholderContent="Festival map"
         />
+        {areas.map(a => 
+            {console.log(a.area.x)
+               return <Image
+                source={{ uri: a.area.icon }}
+                style={{ width: 30, height: 30, borderRadius: 5, marginLeft: a.area.x, marginTop: a.area.y, position: "absolute", zIndex: 5 }}
+                PlaceholderContent="Festival map"
+                />}
+            )}
       </View>
     );
   }

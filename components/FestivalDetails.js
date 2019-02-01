@@ -49,7 +49,8 @@ export default class FestivalDetailsScreen extends React.Component {
             buttons={buttons}
             containerStyle={{height: 100}} />
         {selectedIndex === 0 ? <FestivalInfo festival={festival}/>: 
-        selectedIndex === 1 ? <FestivalEvents events={events.map(e =>{ return {event: e, area: areas.find(a => a.id == e.area_id)}})} /> : null}
+        selectedIndex === 1 ? <FestivalEvents events={events.map(e =>{ return {event: e, area: areas.find(a => a.id === e.area_id)}})} /> : 
+        selectedIndex === 2 ? <FestivalAreas map={festival.map_img} areas={areas.map(a =>{ return {area: a, events: events.filter(e => a.id === e.area_id)}})}/> : null}
       </View> 
     );
   }

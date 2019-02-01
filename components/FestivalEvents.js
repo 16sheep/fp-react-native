@@ -20,6 +20,7 @@ export default class FestivalEvents extends React.Component {
 
     sortAndFilter = (events) => {
         sortedEvents = [...events]
+        
 
         return events.filter(e => 
             e.event.name.toLowerCase().includes(this.state.search.toLowerCase())||
@@ -46,14 +47,14 @@ export default class FestivalEvents extends React.Component {
             containerStyle={{height: 100}} />
         <Text>Events</Text>
         {this.sortAndFilter(events).map(e => 
-            <View>
+            <ScrollView>
                 <Text>{e.event.name}</Text>
                 <Text>{e.event.category}</Text>
                 <Text>{e.event.description}</Text>
                 <Text>{e.event.time_from}</Text>
                 <Text>{e.event.time_until}</Text>
                 <Text>{e.area.name}</Text>
-            </View>)}
+            </ScrollView>)}
       </View>
     );
   }
